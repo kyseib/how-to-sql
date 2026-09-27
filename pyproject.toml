@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "how-to-sql"
+version = "1.0.0"
+description = "An interactive SQL course that runs in your terminal"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+how-to-sql = "sql_tutor.app:main"
+
+[tool.setuptools]
+packages = ["sql_tutor", "sql_tutor.lessons"]
