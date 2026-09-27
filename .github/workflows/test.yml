@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install sql.js
+        run: npm ci
+
+      - name: Python tests
+        run: python -m unittest discover -s tests
+
+      - name: Browser engine tests
+        run: npm test
+
+      # GitHub Pages serves the committed docs/ folder, so it must match the lessons.
+      - name: Check docs/ is up to date
+        run: |
+          python tools/build_web.py docs
+          git add -A docs
+          git diff --cached --exit-code --stat docs || {
+            echo "::error::docs/ is stale. Run 'python3 tools/build_web.py docs' and commit the result."
+            exit 1
+          }

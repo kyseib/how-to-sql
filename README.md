@@ -12,17 +12,18 @@ It comes in two forms built from the same lessons:
 
 ## Browser version (GitHub Pages)
 
-The workflow in `.github/workflows/pages.yml` runs all tests, builds the site
-and deploys it on every push to the default branch. One-time setup:
-**Settings → Pages → Build and deployment → Source: GitHub Actions**. The site
-is then served at `https://<user>.github.io/<repo>/`.
+The built site is committed in `docs/`; the root `index.html` redirects there.
+GitHub Pages setting: **Settings → Pages → Deploy from a branch**, the default
+branch, folder `/ (root)` or `/docs` (both work). The course is then at
+`https://<user>.github.io/<repo>/`.
 
-Build and preview locally:
+After changing lessons or anything in `web/`, rebuild and commit `docs/`
+(CI fails if it is stale):
 
 ```
 npm ci                                   # fetches sql.js
-python3 tools/build_web.py _site
-python3 -m http.server -d _site 8000     # open http://localhost:8000
+python3 tools/build_web.py docs
+python3 -m http.server -d docs 8000      # preview at http://localhost:8000
 ```
 
 (Serve it over HTTP; opening `index.html` as a file won't work because the
@@ -117,6 +118,7 @@ Layout:
 ```
 sql_tutor/            terminal app; lessons/ is the single source of content
 tools/build_web.py    exports lessons to course.json and assembles the site
+docs/                 the built site that GitHub Pages serves (generated)
 web/                  browser app: app.js (UI), worker.js (runs SQL off the
                       main thread; killed and restarted after a 5 s timeout),
                       engine.js (execution + grading), style.css
