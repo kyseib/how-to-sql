@@ -1,10 +1,34 @@
 # How to SQL
 
-An interactive SQL course that runs in your terminal. Read short lessons with
-live examples, then solve exercises that are checked automatically against a
-real database.
+An interactive SQL course. Read short lessons with live examples, then solve
+exercises that are checked automatically against a real database.
 
-No installation or dependencies beyond Python 3.8+ (SQLite ships with Python).
+It comes in two forms built from the same lessons:
+
+- **In the browser** — a static site for GitHub Pages. SQLite runs in the page
+  via [sql.js](https://github.com/sql-js/sql.js) (WebAssembly); nothing is sent
+  to a server. Examples are editable, progress is saved in the browser.
+- **In the terminal** — Python 3.8+ only, no dependencies.
+
+## Browser version (GitHub Pages)
+
+The workflow in `.github/workflows/pages.yml` runs all tests, builds the site
+and deploys it on every push to the default branch. One-time setup:
+**Settings → Pages → Build and deployment → Source: GitHub Actions**. The site
+is then served at `https://<user>.github.io/<repo>/`.
+
+Build and preview locally:
+
+```
+npm ci                                   # fetches sql.js
+python3 tools/build_web.py _site
+python3 -m http.server -d _site 8000     # open http://localhost:8000
+```
+
+(Serve it over HTTP; opening `index.html` as a file won't work because the
+page loads WebAssembly and a Web Worker.)
+
+## Terminal version
 
 ```
 python3 -m sql_tutor
@@ -80,11 +104,23 @@ differences for PostgreSQL, MySQL and SQL Server are called out throughout.
 ## Development
 
 ```
-python3 -m unittest discover -s tests
+python3 -m unittest discover -s tests   # terminal app + grader
+npm test                                # browser grader (needs `npm ci`)
 ```
 
-The tests run every reference solution through the grader, execute every live
-example in every lesson, and drive a scripted session end to end.
+The tests run every reference solution through both graders (Python and the
+JavaScript port in `web/engine.js`), execute every live example in every
+lesson, and drive a scripted terminal session end to end.
+
+Layout:
+
+```
+sql_tutor/            terminal app; lessons/ is the single source of content
+tools/build_web.py    exports lessons to course.json and assembles the site
+web/                  browser app: app.js (UI), worker.js (runs SQL off the
+                      main thread; killed and restarted after a 5 s timeout),
+                      engine.js (execution + grading), style.css
+```
 
 Lesson content lives in `sql_tutor/lessons/` as plain Python data (`Lesson`,
 `Exercise`, `Quiz` from `sql_tutor/model.py`). Page markup: `# heading`,

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to SQL</title>
+  <meta name="description" content="An interactive SQL course that runs entirely in your browser: lessons with live examples and auto-graded exercises.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='7' rx='11' ry='4' fill='%232f6fdb'/%3E%3Cpath d='M5 7v18c0 2.2 4.9 4 11 4s11-1.8 11-4V7c0 2.2-4.9 4-11 4S5 9.2 5 7z' fill='%232f6fdb' opacity='.75'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button id="menu-toggle" class="icon-button" aria-label="Show lessons" aria-expanded="false">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <a class="brand" href="#/">How to SQL</a>
+    <span id="progress-summary" class="muted"></span>
+  </header>
+  <div class="layout">
+    <nav id="sidebar" aria-label="Lessons"></nav>
+    <main id="main" tabindex="-1">
+      <p class="muted loading">Loading the course…</p>
+    </main>
+  </div>
+  <noscript><p class="noscript">This course runs SQL in your browser and needs JavaScript enabled.</p></noscript>
+  <script src="app.js"></script>
+</body>
+</html>

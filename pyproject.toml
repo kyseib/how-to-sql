@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "how-to-sql"
 version = "1.0.0"
-description = "An interactive SQL course that runs in your terminal"
+description = "An interactive SQL course for the terminal and the browser"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = []

@@ -1,0 +1,12 @@
+{
+  "name": "how-to-sql-web",
+  "private": true,
+  "description": "Browser build of the How to SQL course",
+  "scripts": {
+    "build": "python3 tools/build_web.py _site",
+    "test": "node --test tests/web/*.test.js"
+  },
+  "devDependencies": {
+    "sql.js": "1.14.1"
+  }
+}
